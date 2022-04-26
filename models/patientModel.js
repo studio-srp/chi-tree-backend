@@ -15,6 +15,7 @@ const patientSchema = mongoose.Schema({
     {
       reportId: { type: mongoose.Schema.ObjectId, ref: "Report" },
       testedAt: Date,
+      labName: { type: String, required: [true, "Lab name is required"] },
     },
   ],
 });
