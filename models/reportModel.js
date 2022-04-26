@@ -12,6 +12,13 @@ const reportSchema = mongoose.Schema({
   ],
 });
 
+reportSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "biomarkers.biomarkerId",
+  });
+  next();
+});
+
 const Report = mongoose.model("Report", reportSchema);
 
 module.exports = Report;

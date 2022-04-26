@@ -5,7 +5,7 @@ const patientSchema = mongoose.Schema({
     type: String,
     required: [true, "First name is required"],
   },
-  secondName: { type: String, required: [true, "Second name is required"] },
+  lastName: { type: String, required: [true, "Second name is required"] },
   dob: Date,
   gender: { type: String, required: [true, "Gender is required"] },
   email: { type: String, required: [true, "Email is required"] },
@@ -18,6 +18,13 @@ const patientSchema = mongoose.Schema({
       labName: { type: String, required: [true, "Lab name is required"] },
     },
   ],
+});
+
+patientSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "reports.reportId",
+  });
+  next();
 });
 
 const Patient = mongoose.model("Patient", patientSchema);
