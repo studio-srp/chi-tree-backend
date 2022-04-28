@@ -25,6 +25,9 @@ exports.createBioMarkers = catchAsync(async (req, res, next) => {
     })
   );
 
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cross-Origin", "*");
+
   res.status(200).json({
     status: "success",
     message: "successfully created the biomarkers",
