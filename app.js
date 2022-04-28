@@ -3,8 +3,11 @@ const PatientDetailsRoute = require("./routes/PatientDetailsRoute");
 const BioMarkersRoute = require("./routes/BioMarkersRoute");
 const AppError = require("./utils/appError");
 const errorController = require("./controllers/ErrorController");
+const cors = require("cors");
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 
