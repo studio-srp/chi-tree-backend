@@ -7,29 +7,26 @@ exports.getBioMarkers = catchAsync(async (req, res, next) => {
 });
 
 exports.createBioMarkers = catchAsync(async (req, res, next) => {
-  const { description, name, unit, rangeLow, rangeHigh, rangeOptimal } =
-    req.body;
+  const biomarker = req.body.biomarkers;
 
-  const bioMarkerCheck = await BioMarker.findOne({ name, unit });
+  const biomarkerList = await Promise.all(
+    biomarker.map(async (marker) => {
+      const { description, name, unit, rangeLow, rangeHigh, rangeOptimal } =
+        marker;
 
-  if (!bioMarkerCheck) {
-    const bioMarker = await BioMarker.create({
-      description,
-      name,
-      unit,
-      rangeLow,
-      rangeHigh,
-      rangeOptimal,
-    });
-    res.status(200).json({
-      status: "success",
-      message: "created new biomarker",
-      data: bioMarker,
-    });
-  } else {
-    res.status(200).json({
-      status: "warning",
-      message: "biomarker already exists",
-    });
-  }
+      const bioMarker = await BioMarker.create({
+        description,
+        name,
+        unit,
+        rangeLow,
+        rangeHigh,
+        rangeOptimal,
+      });
+    })
+  );
+
+  res.status(200).json({
+    status: "success",
+    message: "successfully created the biomarkers",
+  });
 });

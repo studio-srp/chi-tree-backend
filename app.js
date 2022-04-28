@@ -6,7 +6,7 @@ const errorController = require("./controllers/ErrorController");
 
 const app = express();
 
-app.use(express.json({ limit: "10kb" }));
+app.use(express.json());
 
 app.use("/patientdetails", PatientDetailsRoute);
 app.use("/biomarkers", BioMarkersRoute);
