@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 exports.getLoginAuthentication = catchAsync(async (req, res, next) => {
   const { username, password } = req.body;
 
+  console.log(username);
+
   if (!username || !password) {
     res.status(401).json({
       status: "error",
@@ -14,11 +16,7 @@ exports.getLoginAuthentication = catchAsync(async (req, res, next) => {
 
   const patient = await Patient.findOne({ username });
 
-  let authResult;
-  bcrypt.compare(password, patient.password, function (err, result) {
-    authResult = result;
-  });
-  console.log(result);
+  let authResult = await bcrypt.compare(password, patient.password);
 
   if (authResult) {
     res.status(200).json({
