@@ -25,7 +25,7 @@ exports.createPatientDetails = catchAsync(async (req, res, next) => {
 
   let hashPassword;
 
-  bcrypt.hash(myPlaintextPassword, saltRounds, function (err, hash) {
+  bcrypt.hash(password, 10, function (err, hash) {
     hashPassword = password;
   });
 

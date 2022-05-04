@@ -15,9 +15,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/auth", AuthenticationDetailsRoute);
 app.use("/patientdetails", PatientDetailsRoute);
 app.use("/biomarkers", BioMarkersRoute);
+app.use("/auth", AuthenticationDetailsRoute);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on the server`));
