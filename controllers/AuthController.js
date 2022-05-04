@@ -18,13 +18,12 @@ exports.getLoginAuthentication = catchAsync(async (req, res, next) => {
 
   let authResult = await bcrypt.compare(password, patient.password);
 
-  authResult.password = null;
-  
+  patient.password = null;
 
   if (authResult) {
     res.status(200).json({
       status: "success",
-      message: authResult,
+      patient: patient,
     });
   } else {
     res.status(200).json({
