@@ -22,7 +22,16 @@ exports.createPatientDetails = catchAsync(async (req, res, next) => {
     labName,
   } = req.body;
 
-  let patientCheck = await Patient.findOne({ username, password });
+  let hashPassword;
+
+  bcrypt.hash(myPlaintextPassword, saltRounds, function (err, hash) {
+    hashPassword = password;
+  });
+
+  let patientCheck = await Patient.findOne({
+    username,
+    password: hashPassword,
+  });
 
   // Getting the relevent biomarker Id's from database
   const object = await Promise.all(
@@ -68,7 +77,7 @@ exports.createPatientDetails = catchAsync(async (req, res, next) => {
       gender,
       email,
       username,
-      password,
+      password: hashPassword,
       reports: [
         {
           reportId: report.id,
