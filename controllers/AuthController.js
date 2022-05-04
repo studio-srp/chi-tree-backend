@@ -18,7 +18,7 @@ exports.getLoginAuthentication = catchAsync(async (req, res, next) => {
 
   let authResult = await bcrypt.compare(password, patient.password);
 
-  patient.password = null;
+  delete patient["password"];
 
   if (authResult) {
     res.status(200).json({
