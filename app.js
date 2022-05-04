@@ -26,3 +26,20 @@ app.all("*", (req, res, next) => {
 app.use(errorController);
 
 module.exports = app;
+
+// let value = 21;
+
+// let optimal = 29;
+
+// let diviation = Math.floor((value / optimal) * 50);
+
+// console.log(diviation);
+
+// let points;
+// if (diviation > 50) {
+//   points = 100 - (diviation - 50) * 2;
+// } else {
+//   points = diviation * 2;
+// }
+
+// console.log(points);

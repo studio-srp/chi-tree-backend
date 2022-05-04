@@ -3,10 +3,14 @@ const mongoose = require("mongoose");
 const reportSchema = mongoose.Schema({
   biomarkers: [
     {
-      biomarkerId: { type: mongoose.Schema.ObjectId, ref: "Biomarker" },
+      biomarker: { type: mongoose.Schema.ObjectId, ref: "Biomarker" },
       biomarkerValue: {
         type: Number,
         required: [true, "Biomarker value is required"],
+      },
+      score: {
+        type: Number,
+        require: [true, "Biomarker score is required"],
       },
     },
   ],
@@ -14,7 +18,7 @@ const reportSchema = mongoose.Schema({
 
 reportSchema.pre(/^find/, function (next) {
   this.populate({
-    path: "biomarkers.biomarkerId",
+    path: "biomarkers.biomarker",
   });
   next();
 });

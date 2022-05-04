@@ -27,19 +27,29 @@ exports.createPatientDetails = catchAsync(async (req, res, next) => {
 
   let patientCheck = await Patient.findOne({
     username,
-    email,
+    password: hashPassword,
   });
 
   // Getting the relevent biomarker Id's from database
   const object = await Promise.all(
     biomarkers.map(async (marker) => {
-      const markerId = await BioMarker.find({ name: marker.name }).select(
-        "_id"
-      );
+      const markerId = await BioMarker.findOne({ name: marker.name });
+
+      let diviation = Math.floor((marker.value / markerId.rangeOptimal) * 50);
+
+      let points;
+      if (diviation > 100) {
+        points = 0;
+      } else if (diviation > 50) {
+        points = 100 - (diviation - 50) * 2;
+      } else {
+        points = diviation * 2;
+      }
 
       return {
-        biomarkerId: markerId[0]._id,
+        biomarker: markerId._id,
         biomarkerValue: marker.value,
+        score: points,
       };
     })
   );
