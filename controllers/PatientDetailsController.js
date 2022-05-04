@@ -23,17 +23,11 @@ exports.createPatientDetails = catchAsync(async (req, res, next) => {
     labName,
   } = req.body;
 
-  let hashPassword;
-
-  await bcrypt.hash(password, 10, function (err, hash) {
-    hashPassword = hash;
-  });
-
-  console.log("password: ", hashPassword);
+  let hashPassword = await bcrypt.hash(password, 10);
 
   let patientCheck = await Patient.findOne({
     username,
-    password: hashPassword,
+    email,
   });
 
   // Getting the relevent biomarker Id's from database
