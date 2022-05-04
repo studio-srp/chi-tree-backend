@@ -2,6 +2,7 @@ const Patient = require("./../models/patientModel");
 const Report = require("./../models/reportModel");
 const BioMarker = require("./../models/biomarkerModel");
 const catchAsync = require("./../utils/catchAsync");
+const bcrypt = require("bcrypt");
 
 exports.getPatientDetails = catchAsync(async (req, res, next) => {
   const patient = await Patient.find();
@@ -68,7 +69,6 @@ exports.createPatientDetails = catchAsync(async (req, res, next) => {
 
     res.status(200).json({ status: "success", message: patientCheck });
   } else {
-    //   TODO: Hash Password
     // Create Patient Details
     const patient = await Patient.create({
       firstName,

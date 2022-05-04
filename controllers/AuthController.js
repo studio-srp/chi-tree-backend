@@ -1,5 +1,6 @@
 const Patient = require("./../models/patientModel");
 const catchAsync = require("../utils/catchAsync");
+const bcrypt = require("bcrypt");
 
 exports.getLoginAuthentication = catchAsync(async (req, res, next) => {
   const { username, password } = req.body;
