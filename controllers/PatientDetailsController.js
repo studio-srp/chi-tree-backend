@@ -26,7 +26,7 @@ exports.createPatientDetails = catchAsync(async (req, res, next) => {
   let hashPassword;
 
   bcrypt.hash(password, 10, function (err, hash) {
-    hashPassword = password;
+    hashPassword = hash;
   });
 
   let patientCheck = await Patient.findOne({
