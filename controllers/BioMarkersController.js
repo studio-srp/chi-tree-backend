@@ -1,4 +1,5 @@
 const BioMarker = require("../models/biomarkerModel");
+const System = require("../models/systemModel");
 const catchAsync = require("../utils/catchAsync");
 
 exports.getBioMarkers = catchAsync(async (req, res, next) => {
@@ -32,4 +33,17 @@ exports.createBioMarkers = catchAsync(async (req, res, next) => {
     status: "success",
     message: "successfully created the biomarkers",
   });
+});
+
+exports.createSystemList = catchAsync(async (req, res, next) => {
+  const system = req.body.systems;
+
+  const createdSystem = await System.create({ system });
+
+  res.status(200).json({ status: "success", createdSystem });
+});
+
+exports.getSystemList = catchAsync(async (req, res, next) => {
+  const systems = await System.find();
+  res.status(200).json({ status: "success", systems });
 });
