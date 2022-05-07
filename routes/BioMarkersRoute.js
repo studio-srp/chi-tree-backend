@@ -8,4 +8,9 @@ router
   .get(BioMarkersController.getBioMarkers)
   .post(BioMarkersController.createBioMarkers);
 
+router
+  .route("/system")
+  .post(BioMarkersController.createSystemList)
+  .get(BioMarkersController.getSystemList);
+
 module.exports = router;
