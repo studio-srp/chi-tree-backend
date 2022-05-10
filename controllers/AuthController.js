@@ -23,7 +23,6 @@ exports.getLoginAuthentication = catchAsync(async (req, res, next) => {
       status: "success",
       patient: patient,
     });
-    console.log(patient);
   } else {
     res.status(200).json({
       status: "fail",
