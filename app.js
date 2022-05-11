@@ -21,12 +21,12 @@ app.use("/api/patientdetails", PatientDetailsRoute);
 app.use("/api/biomarkers", BioMarkersRoute);
 app.use("/api/auth", AuthenticationDetailsRoute);
 
-app.all("*", (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on the server`));
-});
-
 app.use((req, res, next) => {
   res.sendFile(path.resolve(__dirname, "public", "index.html"));
+});
+
+app.all("*", (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on the server`));
 });
 
 module.exports = app;
