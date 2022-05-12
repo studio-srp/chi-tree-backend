@@ -8,4 +8,6 @@ router
   .get(PatientDetailsController.getPatientDetails)
   .post(PatientDetailsController.createPatientDetails);
 
+router.route("/email-check").post(PatientDetailsController.checkEmail);
+
 module.exports = router;

@@ -97,3 +97,14 @@ exports.createPatientDetails = catchAsync(async (req, res, next) => {
     res.status(200).json({ status: "success", patient });
   }
 });
+
+exports.checkEmail = catchAsync(async () => {
+  const email = req.body.email;
+  const patient = await Patient.find({ email });
+
+  if (user) {
+    res.status(200).json({ status: "success", patient });
+  }
+
+  res.status(400).json({ status: "error", message: "patient is not exist" });
+});
