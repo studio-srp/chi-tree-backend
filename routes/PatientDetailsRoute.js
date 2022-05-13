@@ -10,4 +10,6 @@ router
 
 router.route("/email-check").post(PatientDetailsController.checkEmail);
 
+router.route("/report").post(PatientDetailsController.delete);
+
 module.exports = router;

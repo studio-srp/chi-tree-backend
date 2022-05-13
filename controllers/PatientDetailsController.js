@@ -110,3 +110,13 @@ exports.checkEmail = catchAsync(async (req, res, next) => {
     res.status(200).json({ status: "error", message: "patient is not exist" });
   }
 });
+
+exports.delete = catchAsync(async (req, res, next) => {
+  const report = await Report.findOne({ id: req.reportId });
+
+  report.biomarkers.map((biomarkers) => {
+    console.log(biomarkers.biomarker.name);
+  });
+
+  res.status(200).json({ report });
+});
