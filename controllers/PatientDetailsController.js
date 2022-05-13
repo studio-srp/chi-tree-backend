@@ -94,7 +94,12 @@ exports.createPatientDetails = catchAsync(async (req, res, next) => {
         },
       ],
     });
-    res.status(200).json({ status: "success", patient });
+
+    if (!patient) {
+      res.status(200).json({ status: "notFound" });
+    } else {
+      res.status(200).json({ status: "success", patient });
+    }
   }
 });
 
