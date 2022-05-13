@@ -10,6 +10,7 @@ exports.getBioMarkers = catchAsync(async (req, res, next) => {
 exports.createBioMarkers = catchAsync(async (req, res, next) => {
   const biomarker = req.body.biomarkers;
 
+  // if (biomarkers.length > 1) {
   const biomarkerList = await Promise.all(
     biomarker.map(async (marker) => {
       const { description, name, unit, rangeLow, rangeHigh, rangeOptimal } =
@@ -25,6 +26,20 @@ exports.createBioMarkers = catchAsync(async (req, res, next) => {
       });
     })
   );
+  // }
+  //  else {
+  //   const { description, name, unit, rangeLow, rangeHigh, rangeOptimal } =
+  //     req.body;
+
+  //   const bioMarker = await BioMarker.create({
+  //     description,
+  //     name,
+  //     unit,
+  //     rangeLow,
+  //     rangeHigh,
+  //     rangeOptimal,
+  //   });
+  // }
 
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Cross-Origin", "*");
