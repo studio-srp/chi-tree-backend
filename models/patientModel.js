@@ -18,7 +18,7 @@ const patientSchema = mongoose.Schema({
       labName: { type: String, required: [true, "Lab name is required"] },
     },
   ],
-  isAdmin: { type: Boolean, defualt: false },
+  isAdmin: { type: Boolean, default: false },
 });
 
 patientSchema.pre(/^find/, function (next) {
