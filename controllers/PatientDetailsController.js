@@ -95,11 +95,8 @@ exports.createPatientDetails = catchAsync(async (req, res, next) => {
       ],
     });
 
-    if (!patient) {
-      res.status(200).json({ status: "notFound" });
-    } else {
-      res.status(200).json({ status: "success", patient });
-    }
+    res.status(200).json({ status: "success", patient });
+    // }
   }
 });
 
@@ -110,6 +107,6 @@ exports.checkEmail = catchAsync(async (req, res, next) => {
   if (patient) {
     res.status(200).json({ status: "success", patient });
   } else {
-    res.status(400).json({ status: "error", message: "patient is not exist" });
+    res.status(200).json({ status: "error", message: "patient is not exist" });
   }
 });
