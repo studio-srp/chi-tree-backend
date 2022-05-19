@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.e324e556.css",
-    "main.js": "/static/js/main.39362607.js",
+    "main.js": "/static/js/main.33f06dcd.js",
     "static/media/Brand logo.png": "/static/media/Brand logo.5a1c62e89b937be23298.png",
     "static/media/Gray tree.png": "/static/media/Gray tree.8af5f5d44ec63df47247.png",
     "static/media/Muscle man.png": "/static/media/Muscle man.5dc1a48457f4e0be42ae.png",
@@ -13,10 +13,10 @@
     "static/media/right-arrow.svg": "/static/media/right-arrow.e84a1075abad84f911520e517632d7e0.svg",
     "static/media/left-arrow.svg": "/static/media/left-arrow.e0160250ccb5adb3ce8b42a5f3820075.svg",
     "main.e324e556.css.map": "/static/css/main.e324e556.css.map",
-    "main.39362607.js.map": "/static/js/main.39362607.js.map"
+    "main.33f06dcd.js.map": "/static/js/main.33f06dcd.js.map"
   },
   "entrypoints": [
     "static/css/main.e324e556.css",
-    "static/js/main.39362607.js"
+    "static/js/main.33f06dcd.js"
   ]
 }

@@ -21,6 +21,7 @@ exports.createPatientDetails = catchAsync(async (req, res, next) => {
     password,
     testedAt,
     labName,
+    isUpdateReport,
     isAdmin,
   } = req.body;
 
@@ -119,4 +120,97 @@ exports.delete = catchAsync(async (req, res, next) => {
   });
 
   res.status(200).json({ report });
+});
+
+exports.getReport = catchAsync(async (req, res, next) => {
+  const { reportDate, email } = req.body;
+
+  const patient = await Patient.findOne({ email }).populate({
+    path: "reports.reportId",
+  });
+
+  // console.log(patient.reports);
+
+  const report = patient.reports.filter((report) => {
+    const previousDate = new Date(report.testedAt);
+    const requestedDate = new Date(reportDate);
+    if (previousDate.getTime() === requestedDate.getTime()) {
+      return report;
+    }
+  });
+
+  res.status(200).json({
+    status: "success",
+    report,
+  });
+});
+
+exports.updateUser = catchAsync(async (req, res, next) => {
+  // update user
+  const { isUpdateReport, biomarkers, testedAt, labName, username, email } =
+    req.body;
+
+  // isUpdateReport is available
+
+  const object = await Promise.all(
+    biomarkers.map(async (marker) => {
+      const markerId = await BioMarker.findOne({ name: marker.name });
+      let diviation = Math.floor((marker.value / markerId.rangeOptimal) * 50);
+      let points;
+      if (diviation > 100) {
+        points = 0;
+      } else if (diviation > 50) {
+        points = 100 - (diviation - 50) * 2;
+      } else {
+        points = diviation * 2;
+      }
+      return {
+        biomarker: markerId._id,
+        biomarkerValue: marker.value,
+        score: points,
+      };
+    })
+  );
+
+  // update reports according to the biomarker
+
+  const report = await Report.findByIdAndUpdate(
+    { _id: isUpdateReport.biomarkerListId },
+    {
+      biomarkers: object,
+    }
+  );
+
+  let patient = await Patient.findOne({
+    username,
+    email,
+  });
+
+  const index = patient.reports.findIndex((report) => {
+    return report.id === isUpdateReport.reportId;
+  });
+
+  console.log(patient.reports[index]);
+
+  patient.reports[index] = {
+    ...patient.reports[index],
+    reportId: report._id,
+    testedAt,
+    labName,
+  };
+
+  console.log(patient.reports[index]);
+
+  const updatedPatient = await Patient.findByIdAndUpdate(
+    { _id: patient.id },
+    patient,
+    {
+      runValidators: false,
+    }
+  );
+
+  res.status(200).json({ status: "success", updatedPatient });
+
+  //   res.status(200).json({ status: "success" });
+  // }
 });
