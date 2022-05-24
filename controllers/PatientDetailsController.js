@@ -190,7 +190,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     return report.id === isUpdateReport.reportId;
   });
 
-  console.log(patient.reports[index]);
+  // console.log(patient.reports[index]);
 
   patient.reports[index] = {
     ...patient.reports[index],
@@ -199,7 +199,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     labName,
   };
 
-  console.log(patient.reports[index]);
+  // console.log(patient.reports[index]);
 
   const updatedPatient = await Patient.findByIdAndUpdate(
     { _id: patient.id },
