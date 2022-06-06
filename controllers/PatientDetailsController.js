@@ -214,3 +214,30 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   //   res.status(200).json({ status: "success" });
   // }
 });
+
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+
+  const { email } = req.body;
+
+  const patient = await Patient.findOne({ email });
+
+  // Delete Reports from the patients
+  if (patient.reports.length > 0) {
+    await Promise.all(
+      patient.reports.map(async (report) => {
+        console.log(report.reportId.id);
+        const deleteReport = await Report.findByIdAndDelete({
+          _id: report.reportId._id,
+        });
+      })
+    );
+  }
+
+  // Delete Patinet
+  const deletePatient = await Patient.findByIdAndDelete({ _id: patient._id });
+
+  res
+    .status(200)
+    .json({ status: "success", message: "Successfully deleted the patient" });
+});

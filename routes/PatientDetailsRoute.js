@@ -7,6 +7,9 @@ router
   .route("/")
   .get(PatientDetailsController.getPatientDetails)
   .post(PatientDetailsController.createPatientDetails);
+
+router.route("/delete-user").post(PatientDetailsController.deleteUser);
+
 router.route("/update-user").post(PatientDetailsController.updateUser);
 
 router.route("/email-check").post(PatientDetailsController.checkEmail);
