@@ -1,23 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.b90395fc.css",
-    "main.js": "/static/js/main.b88b3136.js",
+    "main.css": "/static/css/main.12e4157f.css",
+    "main.js": "/static/js/main.5b943680.js",
     "static/media/Brand logo.png": "/static/media/Brand logo.5a1c62e89b937be23298.png",
     "static/media/Gray tree.png": "/static/media/Gray tree.8af5f5d44ec63df47247.png",
     "static/media/Muscle man.png": "/static/media/Muscle man.5dc1a48457f4e0be42ae.png",
+    "static/media/admin.svg": "/static/media/admin.3fe2cc8c94e6cfe0975f12eace872c05.svg",
+    "static/media/trash.svg": "/static/media/trash.89e51b09c3778e07eb0fb120b5339499.svg",
     "static/media/printer.svg": "/static/media/printer.d6850f72f1f47ce06a31fb54737dd9af.svg",
     "static/media/check-icon.svg": "/static/media/check-icon.588dd79e16378f1cec08cbbb156848d1.svg",
     "static/media/error-icon.svg": "/static/media/error-icon.ae422523020b239c7993983688d2d0a0.svg",
     "index.html": "/index.html",
     "static/media/log-out.svg": "/static/media/log-out.9d3797b7bdca183055c7a70f8ab970b5.svg",
+    "static/media/alert.svg": "/static/media/alert.3c9f36fde1a302d266d7b7114fa4e3d1.svg",
     "static/media/home.svg": "/static/media/home.24bc7e9384f8f9f6108ee15a7fc51a9f.svg",
     "static/media/right-arrow.svg": "/static/media/right-arrow.e84a1075abad84f911520e517632d7e0.svg",
     "static/media/left-arrow.svg": "/static/media/left-arrow.e0160250ccb5adb3ce8b42a5f3820075.svg",
-    "main.b90395fc.css.map": "/static/css/main.b90395fc.css.map",
-    "main.b88b3136.js.map": "/static/js/main.b88b3136.js.map"
+    "main.12e4157f.css.map": "/static/css/main.12e4157f.css.map",
+    "main.5b943680.js.map": "/static/js/main.5b943680.js.map"
   },
   "entrypoints": [
-    "static/css/main.b90395fc.css",
-    "static/js/main.b88b3136.js"
+    "static/css/main.12e4157f.css",
+    "static/js/main.5b943680.js"
   ]
 }
