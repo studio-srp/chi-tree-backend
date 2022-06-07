@@ -112,15 +112,15 @@ exports.checkEmail = catchAsync(async (req, res, next) => {
   }
 });
 
-exports.delete = catchAsync(async (req, res, next) => {
-  const report = await Report.findOne({ id: req.reportId });
+// exports.delete = catchAsync(async (req, res, next) => {
+//   const report = await Report.findOne({ id: req.reportId });
 
-  report.biomarkers.map((biomarkers) => {
-    console.log(biomarkers.biomarker.name);
-  });
+//   report.biomarkers.map((biomarkers) => {
+//     console.log(biomarkers.biomarker.name);
+//   });
 
-  res.status(200).json({ report });
-});
+//   res.status(200).json({ report });
+// });
 
 exports.getReport = catchAsync(async (req, res, next) => {
   const { reportDate, email } = req.body;
@@ -218,7 +218,6 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   if (patient.reports.length > 0) {
     await Promise.all(
       patient.reports.map(async (report) => {
-        console.log(report.reportId.id);
         const deleteReport = await Report.findByIdAndDelete({
           _id: report.reportId._id,
         });

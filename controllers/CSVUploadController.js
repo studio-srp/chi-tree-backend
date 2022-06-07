@@ -26,6 +26,8 @@ exports.uploadCSV = catchAsync(async (req, res, next) => {
   // const patient = await Patient.findOne({ email: json[0].email });
   // console.log(patient);
 
+  let newReports = [];
+
   await Promise.all(
     json.map(async (row) => {
       const {
@@ -39,121 +41,76 @@ exports.uploadCSV = catchAsync(async (req, res, next) => {
         labName,
       } = row;
 
-      const patient = await Patient.findOne({ email: "mylove@test.com" });
-      console.log(patient);
+      const existedBiomarkers = biomarkerList.map((biomarker) => {
+        if (biomarker.name in row) {
+          let diviation = Math.floor(
+            (row[`${biomarker.name}`] / biomarker.rangeOptimal) * 50
+          );
+          let points;
+          if (diviation > 100) {
+            points = 0;
+          } else if (diviation > 50) {
+            points = 100 - (diviation - 50) * 2;
+          } else {
+            points = diviation * 2;
+          }
 
-      // const existedBiomarkers = biomarkerList.map((biomarker) => {
-      //   if (biomarker.name in row) {
-      //     let diviation = Math.floor(
-      //       (row[`${biomarker.name}`] / biomarker.rangeOptimal) * 50
-      //     );
-      //     let points;
-      //     if (diviation > 100) {
-      //       points = 0;
-      //     } else if (diviation > 50) {
-      //       points = 100 - (diviation - 50) * 2;
-      //     } else {
-      //       points = diviation * 2;
-      //     }
+          return {
+            biomarker: biomarker._id,
+            biomarkerValue: row[`${biomarker.name}`],
+            score: points,
+          };
+        }
+      });
 
-      //     return {
-      //       biomarker: biomarker._id,
-      //       biomarkerValue: row[`${biomarker.name}`],
-      //       score: points,
-      //     };
-      //   }
-      // });
+      // Create the report
+      const report = await Report.create({
+        biomarkers: existedBiomarkers,
+      });
 
-      // // Create the report
-      // const report = await Report.create({
-      //   biomarkers: existedBiomarkers,
-      // });
+      let testedAt = new Date(testDate);
+      testedAt.setDate(testedAt.getDate() + 1);
 
-      // if (patient) {
-      //   let reports = patient.reports;
-      //   reports.push({
-      //     reportId: report._id,
-      //     testedAt: testDate,
-      //     labName,
-      //   });
-
-      //   await Patient.findByIdAndUpdate(
-      //     { _id: patient._id },
-      //     { reports: reports },
-      //     { new: true, runValidators: false }
-      //   );
-      // } else {
-      //   let hashPassword = await bcrypt.hash("12345", 10);
-
-      //   // Create Patient Details
-      //   const patient = await Patient.create({
-      //     firstName,
-      //     lastName,
-      //     dob,
-      //     gender,
-      //     email,
-      //     username,
-      //     isAdmin: false,
-      //     password: hashPassword,
-      //     reports: [
-      //       {
-      //         reportId: report.id,
-      //         testedAt: testDate,
-      //         labName,
-      //       },
-      //     ],
-      //   });
-      // }
+      newReports.push({
+        reportId: report._id,
+        testedAt,
+        labName,
+      });
     })
   );
 
-  // let results = json.map(async (row) => {
-  //   const {
-  //     firstName,
-  //     lastName,
-  //     gender,
-  //     email,
-  //     username,
-  //     dob,
-  //     testDate,
-  //     labName,
-  //   } = row;
+  // Checking the patient credentials
+  const patient = await Patient.findOne({ email: json[0].email });
 
-  //   const existedBiomarkers = biomarkerList.map((biomarker) => {
-  //     if (biomarker.name in row) {
-  //       let diviation = Math.floor(
-  //         (row[`${biomarker.name}`] / biomarker.rangeOptimal) * 50
-  //       );
-  //       let points;
-  //       if (diviation > 100) {
-  //         points = 0;
-  //       } else if (diviation > 50) {
-  //         points = 100 - (diviation - 50) * 2;
-  //       } else {
-  //         points = diviation * 2;
-  //       }
+  // If the patient exists
+  if (patient) {
+    let { reports } = patient;
 
-  //       return {
-  //         biomarker: biomarker._id,
-  //         biomarkerValue: row[`${biomarker.name}`],
-  //         score: points,
-  //       };
-  //     }
-  //   });
+    reports = [...reports, ...newReports];
 
-  //   // Create the report
-  //   const report = await Report.create({
-  //     biomarkers: existedBiomarkers,
-  //   });
+    console.log({ withNew: reports });
 
-  // await updateUserDetails(row, report);
-  // });
+    await Patient.findByIdAndUpdate(
+      { _id: patient._id },
+      { reports: reports },
+      { new: true, runValidators: false }
+    );
+    //If there is no patient exists
+  } else {
+    let hashPassword = await bcrypt.hash("12345", 10);
 
-  // results = await Promise.all(results);
-
+    // Create Patient Details
+    const patientCreated = await Patient.create({
+      firstName,
+      lastName,
+      dob,
+      gender,
+      email,
+      username,
+      isAdmin: false,
+      password: hashPassword,
+      reports: newReports,
+    });
+  }
   res.status(200).json({ status: "success" });
 });
-
-// const updateUserDetails = async (row, report) => {
-
-// };
