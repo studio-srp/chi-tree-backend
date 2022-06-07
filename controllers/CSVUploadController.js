@@ -23,9 +23,6 @@ exports.uploadCSV = catchAsync(async (req, res, next) => {
 
   const biomarkerList = await Biomarker.find();
 
-  // const patient = await Patient.findOne({ email: json[0].email });
-  // console.log(patient);
-
   let newReports = [];
 
   await Promise.all(
@@ -87,8 +84,6 @@ exports.uploadCSV = catchAsync(async (req, res, next) => {
     let { reports } = patient;
 
     reports = [...reports, ...newReports];
-
-    console.log({ withNew: reports });
 
     await Patient.findByIdAndUpdate(
       { _id: patient._id },
