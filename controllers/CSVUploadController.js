@@ -94,6 +94,8 @@ exports.uploadCSV = catchAsync(async (req, res, next) => {
   } else {
     let hashPassword = await bcrypt.hash("12345", 10);
 
+    const { firstName, lastName, gender, email, username, dob } = json[0];
+
     // Create Patient Details
     const patientCreated = await Patient.create({
       firstName,

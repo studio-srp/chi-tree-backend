@@ -112,16 +112,6 @@ exports.checkEmail = catchAsync(async (req, res, next) => {
   }
 });
 
-// exports.delete = catchAsync(async (req, res, next) => {
-//   const report = await Report.findOne({ id: req.reportId });
-
-//   report.biomarkers.map((biomarkers) => {
-//     console.log(biomarkers.biomarker.name);
-//   });
-
-//   res.status(200).json({ report });
-// });
-
 exports.getReport = catchAsync(async (req, res, next) => {
   const { reportDate, email } = req.body;
 
