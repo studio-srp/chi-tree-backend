@@ -6,6 +6,8 @@ const AppError = require("./utils/appError");
 const AuthenticationDetailsRoute = require("./routes/AuthenticationDetailsRoute");
 const cors = require("cors");
 const path = require("path");
+const fs = require("fs");
+const CSVRoute = require("./routes/CSVRoute");
 
 const app = express();
 
@@ -20,6 +22,7 @@ app.use((req, res, next) => {
 app.use("/api/patientdetails", PatientDetailsRoute);
 app.use("/api/biomarkers", BioMarkersRoute);
 app.use("/api/auth", AuthenticationDetailsRoute);
+app.use("/api/csv-upload", CSVRoute);
 
 app.use((req, res, next) => {
   res.sendFile(path.resolve(__dirname, "public", "index.html"));

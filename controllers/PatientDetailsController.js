@@ -129,8 +129,6 @@ exports.getReport = catchAsync(async (req, res, next) => {
     path: "reports.reportId",
   });
 
-  // console.log(patient.reports);
-
   const report = patient.reports.filter((report) => {
     const previousDate = new Date(report.testedAt);
     const requestedDate = new Date(reportDate);
@@ -190,16 +188,12 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     return report.id === isUpdateReport.reportId;
   });
 
-  // console.log(patient.reports[index]);
-
   patient.reports[index] = {
     ...patient.reports[index],
     reportId: report._id,
     testedAt,
     labName,
   };
-
-  // console.log(patient.reports[index]);
 
   const updatedPatient = await Patient.findByIdAndUpdate(
     { _id: patient.id },
@@ -216,8 +210,6 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
-  console.log(req.body);
-
   const { email } = req.body;
 
   const patient = await Patient.findOne({ email });
@@ -240,4 +232,47 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   res
     .status(200)
     .json({ status: "success", message: "Successfully deleted the patient" });
+});
+
+exports.deleteReport = catchAsync(async (req, res, next) => {
+  const { reportDate, email } = req.body;
+
+  let patient = await Patient.findOne({ email }).populate({
+    path: "reports.reportId",
+  });
+
+  const report = patient.reports.filter((report) => {
+    const previousDate = new Date(report.testedAt);
+    const requestedDate = new Date(reportDate);
+    if (previousDate.getTime() === requestedDate.getTime()) {
+      return report;
+    }
+  });
+
+  const deleteReport = await Report.findByIdAndDelete({
+    _id: report[0].reportId._id,
+  });
+
+  const { reports } = patient;
+
+  const updatedReports = reports.filter((report) => {
+    const previousDate = new Date(report.testedAt);
+    const requestedDate = new Date(reportDate);
+    if (previousDate.getTime() !== requestedDate.getTime()) {
+      return report;
+    }
+  });
+
+  patient.reports = updatedReports;
+
+  const updatedPatient = await Patient.findByIdAndUpdate(
+    { _id: patient._id },
+    patient,
+    { runValidators: false }
+  );
+
+  res.status(200).json({
+    status: "success",
+    report,
+  });
 });
