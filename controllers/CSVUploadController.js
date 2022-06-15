@@ -38,25 +38,33 @@ exports.uploadCSV = catchAsync(async (req, res, next) => {
         labName,
       } = row;
 
-      const existedBiomarkers = biomarkerList.map((biomarker) => {
-        if (biomarker.name in row) {
-          let diviation = Math.floor(
-            (row[`${biomarker.name}`] / biomarker.rangeOptimal) * 50
-          );
-          let points;
-          if (diviation > 100) {
-            points = 0;
-          } else if (diviation > 50) {
-            points = 100 - (diviation - 50) * 2;
-          } else {
-            points = diviation * 2;
-          }
+      const existedBiomarkers = [];
 
-          return {
-            biomarker: biomarker._id,
-            biomarkerValue: row[`${biomarker.name}`],
-            score: points,
-          };
+      biomarkerList.map((biomarker) => {
+        if (biomarker.name in row) {
+          if (row[`${biomarker.name}`]) {
+            if (biomarker.name) {
+              let deviation = Math.floor(
+                (row[`${biomarker.name}`] / biomarker.rangeOptimal) * 50
+              );
+              let points;
+              if (deviation > 100) {
+                points = 0;
+              } else if (deviation > 50) {
+                points = 100 - (deviation - 50) * 2;
+              } else {
+                points = deviation * 2;
+              }
+
+              existedBiomarkers.push({
+                biomarker: biomarker._id,
+                biomarkerValue: row[`${biomarker.name}`],
+                score: points,
+              });
+            }
+          } else {
+            return;
+          }
         }
       });
 
