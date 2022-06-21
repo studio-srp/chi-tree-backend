@@ -15,7 +15,7 @@ exports.uploadCSV = catchAsync(async (req, res, next) => {
 
     file.mv(uploadPath, (err) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
         }
     });
 
@@ -27,7 +27,7 @@ exports.uploadCSV = catchAsync(async (req, res, next) => {
 
     await Promise.all(
         json.map(async (row) => {
-            const { firstName, lastName, gender, email, username, dob, testDate, labName } = row;
+            const { testDate, labName } = row;
 
             const existedBiomarkers = [];
 
@@ -96,7 +96,7 @@ exports.uploadCSV = catchAsync(async (req, res, next) => {
         const patientCreated = await Patient.create({
             firstName,
             lastName,
-            dob,
+            dob: dob,
             gender,
             email,
             username,
@@ -107,13 +107,3 @@ exports.uploadCSV = catchAsync(async (req, res, next) => {
     }
     res.status(200).json({ status: "success" });
 });
-
-// const previousDate = new Date(
-//     new Date(new Date(report.testedAt).setDate(new Date(report.testedAt).getDate() - 1)).setHours(
-//         0,
-//         0,
-//         0,
-//         0
-//     )
-// );
-// const requestedDate = new Date(new Date(reportDate).setHours(0, 0, 0, 0));
