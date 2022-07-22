@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.ce6fa4d8.css",
-    "main.js": "/static/js/main.0c9b469a.js",
+    "main.css": "/static/css/main.a342ccf9.css",
+    "main.js": "/static/js/main.aeb33e5a.js",
     "static/media/Brand logo.png": "/static/media/Brand logo.5a1c62e89b937be23298.png",
     "static/media/Gray tree.png": "/static/media/Gray tree.8af5f5d44ec63df47247.png",
     "static/media/Muscle man.png": "/static/media/Muscle man.5dc1a48457f4e0be42ae.png",
@@ -18,11 +18,11 @@
     "static/media/home.svg": "/static/media/home.24bc7e9384f8f9f6108ee15a7fc51a9f.svg",
     "static/media/right-arrow.svg": "/static/media/right-arrow.e84a1075abad84f911520e517632d7e0.svg",
     "static/media/left-arrow.svg": "/static/media/left-arrow.e0160250ccb5adb3ce8b42a5f3820075.svg",
-    "main.ce6fa4d8.css.map": "/static/css/main.ce6fa4d8.css.map",
-    "main.0c9b469a.js.map": "/static/js/main.0c9b469a.js.map"
+    "main.a342ccf9.css.map": "/static/css/main.a342ccf9.css.map",
+    "main.aeb33e5a.js.map": "/static/js/main.aeb33e5a.js.map"
   },
   "entrypoints": [
-    "static/css/main.ce6fa4d8.css",
-    "static/js/main.0c9b469a.js"
+    "static/css/main.a342ccf9.css",
+    "static/js/main.aeb33e5a.js"
   ]
 }
